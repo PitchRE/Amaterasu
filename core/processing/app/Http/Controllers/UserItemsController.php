@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User_items;
+use App\Items;
 use Illuminate\Http\Request;
 
 class UserItemsController extends Controller
@@ -22,9 +23,20 @@ class UserItemsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $RandItem = Items::inRandomOrder()->firstorFail();
+
+
+
+        $user_item = new User_items;
+
+        $user_item->discord_id = $request->discord_id;
+        $user_item->item_id = $RandItem->id;
+        $user_item->save();
+
+
+        return $RandItem;
     }
 
     /**

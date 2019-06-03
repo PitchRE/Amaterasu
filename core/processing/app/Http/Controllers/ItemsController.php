@@ -13,9 +13,7 @@ class ItemsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
+    { }
 
     /**
      * Show the form for creating a new resource.
@@ -34,9 +32,7 @@ class ItemsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-    }
+    { }
 
     /**
      * Display the specified resource.

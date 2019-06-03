@@ -18,6 +18,7 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->string('rarity');
             $table->integer('value');
+            $table->text('image');
             $table->timestamps();
         });
     }
