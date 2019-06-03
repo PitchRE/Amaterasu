@@ -88,7 +88,7 @@ class ReputationController extends Controller
 
     public function rep(Request $request)
     {
-        return 444;
+
         $user = User::find($request->discord_id);
         $Now = new \DateTime;
 
