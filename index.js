@@ -2,8 +2,10 @@ require('dotenv').config();
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
 
+const axios = require('axios'); // HTTP Client
+
 const client = new CommandoClient({
-  commandPrefix: '?',
+  commandPrefix: '!',
   owner: process.env.BOT_OWNER,
   invite: 'https://discord.gg/pHnTma'
 });
@@ -27,3 +29,27 @@ client.once('ready', () => {
 client.on('error', console.error);
 
 client.login(process.env.BOT_TOKEN);
+
+/// Logs Module
+
+client.on('message', async message => {
+  console.log(message.content);
+  axios
+    .post(process.env.BACKEND_HOST + `api/v1/user/check`, {
+      discord_id: message.author.id,
+      name: message.author.username,
+      nickname: message.member.nickname,
+      guild_id: message.guild.id,
+      guild_name: message.guild.name,
+      channel_id: message.channel.id,
+      channel_name: message.channel.name,
+      content: message.content,
+      bot: message.author.bot
+    })
+    .then(function(response) {
+      if (response.data == 2) message.reply('User registered!');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});
