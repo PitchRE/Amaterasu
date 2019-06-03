@@ -2,6 +2,8 @@ require('dotenv').config();
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
 
+const axios = require('axios'); // HTTP Client
+
 const client = new CommandoClient({
   commandPrefix: '!',
   owner: process.env.BOT_OWNER,
@@ -27,3 +29,17 @@ client.once('ready', () => {
 client.on('error', console.error);
 
 client.login(process.env.BOT_TOKEN);
+
+client.on('message', async message => {
+  axios
+    .post(process.env.BACKEND_HOST + `api/v1/user/check`, {
+      discord_id: message.author.id,
+      name: message.author.username
+    })
+    .then(function(response) {
+      if (response.data == 2) message.reply('User registered!');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});

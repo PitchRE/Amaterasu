@@ -9,6 +9,9 @@ use App\Events\NewUser;
 
 class User extends Authenticatable
 {
+
+    protected $primaryKey = 'discord_id';
+
     use Notifiable;
 
     protected $dispatchesEvents = [

@@ -17,4 +17,4 @@ Route::get('/', function () {
 
 Route::POST('/api/v1/user/check', 'UserController@check');
 
-Route::POST('/api/v1/user/{id}/rep', 'ReputationController@rep');
+Route::POST('/api/v1/user/rep', 'ReputationController@rep');
