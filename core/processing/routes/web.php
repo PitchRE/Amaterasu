@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::POST('/api/v1/user/check', 'UserController@check');
+
+Route::POST('/api/v1/user/{id}/rep', 'ReputationController@rep');

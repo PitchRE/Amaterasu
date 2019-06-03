@@ -28,7 +28,7 @@ module.exports = class avatar extends Command {
     }
 
     axios
-      .get(process.env.BACKEND_HOST + `api/v1/user/${user.id}/rep`)
+      .post(process.env.BACKEND_HOST + `api/v1/user/${user.id}/rep`)
       .then(function(response) {})
       .catch(function(error) {
         console.log(error);

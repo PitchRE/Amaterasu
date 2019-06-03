@@ -5,10 +5,16 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Events\NewUser;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
+    protected $dispatchesEvents = [
+        "created" => NewUser::class,
+    ];
+
 
     /**
      * The attributes that are mass assignable.
@@ -36,4 +42,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function Tweet()
+    {
+        return $this->belongsTo(Tweet::class, 'tweet_id', 'id');
+    }
+
+    public function Reputation()
+    {
+        return $this->hasOne(Reputation::class, 'discord_id', 'discord_id');
+    }
 }
