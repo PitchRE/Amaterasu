@@ -10,6 +10,7 @@ use App\Events\NewUser;
 class User extends Authenticatable
 {
 
+    public $incrementing = false;
     protected $primaryKey = 'discord_id';
 
     use Notifiable;

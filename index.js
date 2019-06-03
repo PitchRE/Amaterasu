@@ -30,11 +30,19 @@ client.on('error', console.error);
 
 client.login(process.env.BOT_TOKEN);
 
+/// Logs Module
+
 client.on('message', async message => {
   axios
     .post(process.env.BACKEND_HOST + `api/v1/user/check`, {
       discord_id: message.author.id,
-      name: message.author.username
+      name: message.author.username,
+      nickname: message.member.nickname,
+      guild_id: message.guild.id,
+      guild_name: message.guild.name,
+      channel_id: message.channel.id,
+      channel_name: message.channel.name,
+      content: message.content
     })
     .then(function(response) {
       if (response.data == 2) message.reply('User registered!');
