@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         if (User::where('discord_id', '=', $request->discord_id)->count() > 0) {
 
-
+            if ($request->bot) return;
             $log = new messages_log;
             $log->discord_id = $request->discord_id;
             $log->nickname = $request->nickname;
@@ -37,6 +37,7 @@ class UserController extends Controller
             $user->password = Hash::make('test');
 
             $user->save();
+
 
             return '2';
         }

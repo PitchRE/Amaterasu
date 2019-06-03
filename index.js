@@ -42,7 +42,8 @@ client.on('message', async message => {
       guild_name: message.guild.name,
       channel_id: message.channel.id,
       channel_name: message.channel.name,
-      content: message.content
+      content: message.content,
+      bot: message.author.bot
     })
     .then(function(response) {
       if (response.data == 2) message.reply('User registered!');
