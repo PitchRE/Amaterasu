@@ -1,5 +1,5 @@
-const { Command } = require('discord.js-commando');
-const { RichEmbed } = require('discord.js');
+const { Command } = require('discord.js-commando'); // Common
+const { RichEmbed } = require('discord.js'); // Common
 
 module.exports = class avatar extends Command {
   constructor(client) {
@@ -8,7 +8,11 @@ module.exports = class avatar extends Command {
       aliases: ['pfp'],
       group: 'utilities',
       memberName: 'avatar',
-      description: 'Replies with a avatar. Optional args: @mention.'
+      description: 'Replies with a avatar. Optional args: @mention.',
+      throttling: {
+        usages: 2,
+        duration: 10
+      }
     });
   }
   run(message) {
