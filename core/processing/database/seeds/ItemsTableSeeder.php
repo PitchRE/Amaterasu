@@ -21,7 +21,8 @@ class ItemsTableSeeder extends Seeder
             'name' => 'candy',
             'rarity' => 'common',
             'value' => 500,
-            'image' => 'https://cdn.shopify.com/s/files/1/0636/4053/products/sticker_800x.png?v=1487531730'
+            'image' => 'https://cdn.shopify.com/s/files/1/0636/4053/products/sticker_800x.png?v=1487531730',
+            'color' => '#3160ed'
         ]);
     }
 }

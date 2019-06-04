@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
             $table->string('rarity');
             $table->integer('value');
             $table->text('image');
+            $table->string('color');
             $table->timestamps();
         });
     }

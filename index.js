@@ -15,7 +15,8 @@ client.registry
   .registerGroups([
     ['user', 'User related commands.'],
     ['fun', 'Fun!'],
-    ['utilities', 'Utilities']
+    ['utilities', 'Utilities'],
+    ['admin', 'Admin only commands!']
   ])
   .registerDefaultGroups()
   .registerDefaultCommands()
