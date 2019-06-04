@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User_items;
 use App\Items;
+use App\User;
 use Illuminate\Http\Request;
 
 class UserItemsController extends Controller
@@ -13,11 +14,17 @@ class UserItemsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $user = User::find($request->discord_id);
 
+        // return $user->user_items;
+
+
+        return response()->json(["DATA" => $user->user_items->load('item_data')->toArray()], 201);
+
+        $user_items = $user->user_items;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -27,14 +34,18 @@ class UserItemsController extends Controller
     {
         $RandItem = Items::inRandomOrder()->firstorFail();
 
+        if (User_items::where('discord_id', $request->discord_id)->where('item_id', $RandItem->id)->count() > 0) {
+            // user found
 
+            User_items::where('discord_id', $request->discord_id)->where('item_id', $RandItem->id)->first()->increment('count');
+        } else {
 
-        $user_item = new User_items;
+            $user_item = new User_items;
 
-        $user_item->discord_id = $request->discord_id;
-        $user_item->item_id = $RandItem->id;
-        $user_item->save();
-
+            $user_item->discord_id = $request->discord_id;
+            $user_item->item_id = $RandItem->id;
+            $user_item->save();
+        }
 
         return $RandItem;
     }

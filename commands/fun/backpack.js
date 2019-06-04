@@ -4,14 +4,20 @@ const axios = require('axios'); // HTTP Client
 const bot_err = require('../../core/libraries/errors');
 const func = require('../../core/libraries/embeds');
 
+const reactionControls = {
+  NEXT_PAGE: '▶',
+  PREV_PAGE: '◀',
+  STOP: '⏹'
+};
+
 module.exports = class avatar extends Command {
   constructor(client) {
     super(client, {
-      name: 'search',
-      aliases: ['s'],
+      name: 'backpack',
+      aliases: ['bp'],
       group: 'fun',
-      memberName: 'search',
-      description: 'Search for items!',
+      memberName: 'backpack',
+      description: 'Check your items!',
       throttling: {
         usages: 1,
         duration: 60
@@ -19,15 +25,20 @@ module.exports = class avatar extends Command {
     });
   }
   async run(message) {
-    const msg = await message.reply('Rolling');
-
+    var text = '';
     axios
-      .post(process.env.BACKEND_HOST + `api/v1/user/item/random`, {
+      .post(process.env.BACKEND_HOST + `api/v1/user/items`, {
         discord_id: message.author.id
       })
       .then(function(response) {
-        console.log(func.embed(response, message));
-        msg.edit(func.embed(response, message));
+        response.data.DATA.sort(function(a, b) {
+          return b.count - a.count;
+        });
+        response.data.DATA.forEach(element => {
+          text += ` \n [**${element.count}**] ${element.item_data.name} `;
+        });
+
+        message.reply(text);
       })
       .catch(function(error) {
         // handle error

@@ -10,6 +10,7 @@ module.exports = class avatar extends Command {
       memberName: 'clear',
       description: 'Clears chat!',
       userPermissions: ['MANAGE_MESSAGES'],
+      clientPermissions: ['MANAGE_MESSAGES'],
       throttling: {
         usages: 1,
         duration: 10

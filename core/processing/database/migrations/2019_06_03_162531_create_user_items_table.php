@@ -17,6 +17,7 @@ class CreateUserItemsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('discord_id');
             $table->bigInteger('item_id')->unsigned();
+            $table->integer('count')->unsigned()->default(1);
             $table->timestamps();
         });
 

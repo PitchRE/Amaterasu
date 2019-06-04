@@ -34,7 +34,6 @@ client.login(process.env.BOT_TOKEN);
 /// Logs Module
 
 client.on('message', async message => {
-  console.log(message.content);
   axios
     .post(process.env.BACKEND_HOST + `api/v1/user/check`, {
       discord_id: message.author.id,
