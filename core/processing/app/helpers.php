@@ -15,3 +15,19 @@ function generate_log($request)
     $log->content = $request->content;
     $log->save();
 }
+
+
+// function rarity_algorithm()
+// {
+
+//     $rand = rand(1, 100);   
+//     if ($rand <= 50) { 
+//         $rarity = 'common';
+//     } else if ($rand <= 80) {
+//         $rarity = 'uncommon';
+//     } else {
+//         $rarity = 'rare';
+//     }
+
+//     return $rarity;
+// }

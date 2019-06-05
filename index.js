@@ -15,7 +15,8 @@ client.registry
   .registerGroups([
     ['user', 'User related commands.'],
     ['fun', 'Fun!'],
-    ['utilities', 'Utilities']
+    ['utilities', 'Utilities'],
+    ['admin', 'Admin only commands!']
   ])
   .registerDefaultGroups()
   .registerDefaultCommands()
@@ -33,7 +34,7 @@ client.login(process.env.BOT_TOKEN);
 /// Logs Module
 
 client.on('message', async message => {
-  console.log(message.content);
+  if (message.guild === null) return;
   axios
     .post(process.env.BACKEND_HOST + `api/v1/user/check`, {
       discord_id: message.author.id,

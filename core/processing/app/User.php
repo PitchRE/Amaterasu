@@ -47,13 +47,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function Tweet()
-    {
-        return $this->belongsTo(Tweet::class, 'tweet_id', 'id');
-    }
+
 
     public function Reputation()
     {
         return $this->hasOne(Reputation::class, 'discord_id', 'discord_id');
+    }
+
+    public function user_items()
+    {
+        return $this->hasMany(User_items::class, 'discord_id', 'discord_id');
     }
 }

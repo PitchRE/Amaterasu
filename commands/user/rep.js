@@ -15,20 +15,19 @@ module.exports = class avatar extends Command {
       throttling: {
         usages: 2,
         duration: 10
-      }
+      },
+      args: [
+        {
+          key: 'user',
+          prompt:
+            'Which user do you want to give reputation point? \n **Mention yourself if you want to check cooldowns!**',
+          type: 'user'
+        }
+      ]
     });
   }
-  run(message) {
+  run(message, { user }) {
     // Check if user mentioned someone | Required
-
-    if (
-      !message.mentions.users.first() ||
-      message.mentions.users.first().id == message.author.id
-    ) {
-      return message.reply('You need to @mention someone!');
-    } else {
-      var user = message.mentions.users.first();
-    }
 
     /// HTTP Request to backend.
 
@@ -36,23 +35,42 @@ module.exports = class avatar extends Command {
 
     // 2 = Succes
     // -1 = Cooldown not yet ready.
+    // 3 = can rep.
+    // 4 = cooldown not yet ready.
 
     axios
       .post(process.env.BACKEND_HOST + `api/v1/user/rep`, {
-        discord_id: user.id,
+        discord_id: message.author.id,
+        target_discord_id: user.id,
         name: user.username
       })
       .then(function(response) {
-        if (response.data.status == 2) {
-          message.reply(`I gave ${user.username} reputation point!`);
-        } else if (response.data.status == -1) {
-          message.reply(
-            `You need wait atleast ${
-              response.data.time
-            } minutes more before you gonna be able to use that command again!`
-          );
-        } else
-          return message.reply(`${bot_err.api} \n Reputation Module Exception`);
+        console.log(response.data.status);
+        switch (response.data.status) {
+          case 3:
+            message.reply('U can already give someone rep!');
+
+            break;
+          case 4:
+            message.reply(
+              `You need wait atleast ${
+                response.data.time
+              } minutes more before you gonna be able to use that command again!`
+            );
+            break;
+          case 2:
+            message.reply(`I gave ${user.username} reputation point!`);
+
+            break;
+
+          case -1:
+            message.reply(
+              `You need wait atleast ${
+                response.data.time
+              } minutes more before you gonna be able to use that command again!`
+            );
+            break;
+        }
       })
       .catch(function(error) {
         message.reply(`${bot_err.api} \n Reputation Backend Module Exception`);

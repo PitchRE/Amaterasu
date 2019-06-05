@@ -88,30 +88,61 @@ class ReputationController extends Controller
 
     public function rep(Request $request)
     {
-        return 444;
+
         $user = User::find($request->discord_id);
         $Now = new \DateTime;
+        $target = User::find($request->target_discord_id);
 
         $d = new \DateTime($user->Reputation->updated_at);
 
 
-        if (strtotime($user->Reputation->updated_at) < strtotime('-1 hour')) {
+        if ($user->discord_id == $target->discord_id) {
+            switch (strtotime($user->Reputation->updated_at) < strtotime('-1 hour')) {
 
-            Reputation::find($user->discord_id)->increment('points');
+                case true;
+
+                    return response()->json(
+                        ['status' => 3, 'points' => $target->Reputation->points, 'time' => -1]
+                    );
+
+                case false;
+
+                    $test = $user->Reputation->updated_at->modify('+1 hour');
+
+                    $now = Carbon::now();
+                    $diff = $test->diffInMinutes($now);
+
+
+                    return response()->json(
+                        ['status' => 4, 'points' => $target->Reputation->points, 'time' => $diff]
+                    );
+            }
+        }
+
+
+        if ($user->Reputation->updated_at->timestamp < strtotime('-1 hour')) {
+
+            $Rep = Reputation::find($target->discord_id);
+            $Rep->timestamps = false;
+            $Rep->increment('points');
+            $Rep->save();
+
+            Reputation::find($user->discord_id)->touch();
 
             return response()->json(
-                ['status' => 2, 'points' => $user->Reputation->points, 'time' => -1]
+                ['status' => 2, 'points' => $target->Reputation->points, 'time' => -1]
             );
         } else {
+
             $test = $user->Reputation->updated_at->modify('+1 hour');
 
             $now = Carbon::now();
             $diff = $test->diffInMinutes($now);
+
+
             return response()->json(
                 ['status' => -1, 'points' => $user->Reputation->points, 'time' => $diff]
             );
         }
-
-        return 1;
     }
 }
