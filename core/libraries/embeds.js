@@ -47,7 +47,6 @@ function sell(message, response, item, ammount) {
   let balance = response.data.balance;
   let ammountleft = response.data.ammount;
 
-  console.log(response.data.status);
   switch (response.data.status) {
     case -1:
       var my_embed = new RichEmbed()
