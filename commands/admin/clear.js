@@ -7,6 +7,7 @@ module.exports = class avatar extends Command {
       name: 'clear',
       aliases: ['c'],
       group: 'admin',
+      guildOnly: true,
       memberName: 'clear',
       description: 'Clears chat!',
       userPermissions: ['MANAGE_MESSAGES'],

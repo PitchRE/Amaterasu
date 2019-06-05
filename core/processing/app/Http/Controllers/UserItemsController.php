@@ -105,4 +105,39 @@ class UserItemsController extends Controller
     {
         //
     }
+
+
+    public function sell(Request $request)
+    {
+
+        $ammount = $request->ammount;
+
+        // return response()->json(["id" => $request->discord_id, 'item' => $request->item_name, 'ammount' => $request->ammount], 201);
+
+        $item_to_sell = User_items::whereHas('item_data', function ($q) use ($request) {
+
+
+            $q->where('name', '=', $request->item_name);
+        })->where('discord_id', $request->discord_id)->first();
+
+
+        if ($item_to_sell == null) return response()->json(["status" => -2, 'item' => $request->item_name], 201);
+        if ($ammount > $item_to_sell->count) return response()->json(["status" => -1, 'item' => $request->item_name, 'ammount' => $item_to_sell->count], 201);
+
+        $cash = $ammount * $item_to_sell->item_data->value;
+
+
+        $item_to_sell->decrement('count', $ammount);
+        $item_to_sell->save();
+
+        $usr = User::find($request->discord_id);
+        $usr->increment('cash', $cash);
+        $usr->save();
+
+
+        return response()->json(["status" => 1, 'cash' => $cash, 'balance' => $usr->cash, 'ammount' => $item_to_sell->count], 201);
+
+
+        return $cash;
+    }
 }

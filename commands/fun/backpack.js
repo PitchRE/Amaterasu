@@ -38,7 +38,8 @@ module.exports = class avatar extends Command {
           text += ` \n [**${element.count}**] ${element.item_data.name} `;
         });
 
-        message.reply(text);
+        message.reply('Check your DM!');
+        message.author.send(text);
       })
       .catch(function(error) {
         // handle error
