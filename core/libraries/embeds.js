@@ -64,8 +64,8 @@ function sell(message, response, item, ammount) {
     case -2:
       var my_embed = new RichEmbed()
         .setColor('#FF0000')
-        .setAuthor('Invalid item name.')
-        .setDescription('Invalid item name.')
+        .setAuthor('Transaction Fail')
+        .setDescription('There is no item with that name.')
 
         .setTimestamp()
         .setFooter('Marketplace', 'https://i.imgur.com/wSTFkRM.png');
