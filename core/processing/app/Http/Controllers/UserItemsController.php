@@ -20,8 +20,14 @@ class UserItemsController extends Controller
 
         // return $user->user_items;
 
+        $worth = 0;
 
-        return response()->json(["DATA" => $user->user_items->load('item_data')->toArray()], 201);
+        foreach ($user->user_items as $item) {
+            $worth += $item->count * $item->item_data->value;
+        }
+
+
+        return response()->json(["DATA" => $user->user_items->load('item_data')->toArray(), 'value' => $worth], 201);
 
         $user_items = $user->user_items;
     }

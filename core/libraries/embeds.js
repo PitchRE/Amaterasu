@@ -85,7 +85,7 @@ function sell(message, response, item, ammount) {
     case 3:
       var itemdata = '';
       for (var key in response.data.itemCollection) {
-        itemdata += key + ' - ' + response.data.itemCollection[key] + ' \n';
+        itemdata += `[**${response.data.itemCollection[key]}**]  ${key} \n`;
       }
 
       var my_embed = new RichEmbed()
@@ -103,4 +103,18 @@ function sell(message, response, item, ammount) {
   return my_embed;
 }
 
-module.exports = { embed, sell };
+function backpack(response, text) {
+  var bp = new RichEmbed()
+    .setColor('#8A2BE2')
+    .setAuthor('Backpack')
+    .setDescription(text)
+
+    .setTimestamp()
+    .setFooter(
+      `Backpack | Total Value: ${response.data.value}`,
+      'https://i.imgur.com/wSTFkRM.png'
+    );
+  return bp;
+}
+
+module.exports = { embed, sell, backpack };
