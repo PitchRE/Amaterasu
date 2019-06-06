@@ -1,4 +1,7 @@
 <!-- docs/_sidebar.md -->
 
 - [Home](/)
-- [API V1](api/api.md 'The greatest guide in the world')
+
+- [**API v1**](api/api.md 'The greatest guide in the world')
+- [User](api/user.md 'The greatest guide in the world')
+- [Items](api/items.md 'The greatest guide in the world')
