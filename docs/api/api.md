@@ -367,7 +367,7 @@ __`discord_id` equal to `target_discord_id` will be always rejected.__
 
 
 - `discord_id`: Discord id. (unique).
-- `item_name`: Name of item to sell. (string)
+- `item_name`: Name of item to sell or rarity (string)
 - `ammount`: Number of items to sell. (int)
 
 
@@ -377,10 +377,15 @@ __`discord_id` equal to `target_discord_id` will be always rejected.__
 > `item_name` can be "all". In this case all user items are affected by this command. 
 >
 > `ammount` can be "all". In this case, all items with given name are sold.
+>
+> `item_name` can be name of rarity type, in this case all items with given rarity are affected by.
+
+
+
 
 > If both, `item_name` and `ammount` are equal to "all", all user items are sold.
 > If `item_name` is "all" and `ammount` is integer, only items with count higher or equal to `ammount` are affected by.
-
+> If  `item_name` is rarity type, and `ammount` is integer, items with  more or equaal to `ammount` are affected by.
 
 
 #### Response

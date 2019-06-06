@@ -120,7 +120,70 @@ class UserItemsController extends Controller
 
         // return response()->json(["id" => $request->discord_id, 'item' => $request->item_name, 'ammount' => $request->ammount], 201);
 
-        if ($request->item_name == 'all') {
+
+        $rarity_array = array('good', 'nice');
+
+        if (in_array($request->item_name, $rarity_array)) {
+
+
+            if ($request->ammount != 'all') {
+
+                $item_to_sell = User_items::whereHas('item_data', function ($q) use ($request) {
+                    $q->where('rarity', '=', $request->item_name);
+                })->where('discord_id', $request->discord_id)->where('count', '>=', $request->ammount)->get();
+
+                $allCash = 0;
+                $itemNum = 0;
+                $SoldedArray = collect([]);
+                foreach ($item_to_sell as $item) {
+
+                    if ($item->count < $request->ammount) continue;
+                    $allCash += $item->item_data->value * $request->ammount;
+                    $itemNum += $request->ammount;
+
+
+                    $SoldedArray->put($item->item_data->name, $request->ammount);
+
+
+                    $item->decrement('count', $request->ammount);
+                    $item->save();
+                }
+
+                $usr = User::find($request->discord_id);
+                $usr->increment('cash', $allCash);
+                $usr->save();
+
+                return response()->json(["status" => 3, 'cash' => $allCash, 'balance' => $usr->cash, 'ammount' => $itemNum, 'itemCollection' => $SoldedArray], 201);
+            } else {
+
+                $item_to_sell = User_items::whereHas('item_data', function ($q) use ($request) {
+                    $q->where('rarity', '=', $request->item_name);
+                })->where('discord_id', $request->discord_id)->get();
+
+                $allCash = 0;
+                $itemNum = 0;
+                $SoldedArray = collect([]);
+                foreach ($item_to_sell as $item) {
+
+                    if ($item->count < 1) continue;
+                    $allCash += $item->item_data->value * $item->count;
+                    $itemNum += $item->count;
+
+
+                    $SoldedArray->put($item->item_data->name, $item->count);
+
+
+                    $item->decrement('count', $item->count);
+                    $item->save();
+                }
+
+                $usr = User::find($request->discord_id);
+                $usr->increment('cash', $allCash);
+                $usr->save();
+
+                return response()->json(["status" => 3, 'cash' => $allCash, 'balance' => $usr->cash, 'ammount' => $itemNum, 'itemCollection' => $SoldedArray], 201);
+            }
+        } else if ($request->item_name == 'all') {
 
 
             if ($request->ammount != 'all') {
