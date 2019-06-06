@@ -117,4 +117,42 @@ function backpack(response, text) {
   return bp;
 }
 
-module.exports = { embed, sell, backpack };
+function give(response, owner, target) {
+  switch (response.data.status) {
+    case -1:
+      var give_embed = new RichEmbed()
+        .setColor('#FF0000')
+        .setAuthor('Transaction Fail')
+        .setDescription("This user doesn't have account in our system.")
+        .setTimestamp();
+      break;
+
+    case -2:
+      var give_embed = new RichEmbed()
+        .setColor('#FF0000')
+        .setAuthor('Transaction Fail')
+        .setDescription("You don't have enought items to give.")
+        .setTimestamp();
+      break;
+    case 1 || 2:
+      var give_embed = new RichEmbed()
+        .setColor('#5cb85c')
+        .setAuthor('Transaction Succes')
+        .setDescription('Transaction was successful.')
+        .addField(
+          'Item',
+          `**${response.data.ammount}**x ${response.data.item_name}`,
+          true
+        )
+        .addField(
+          'Counterparties',
+          `**${owner.username}** ==> **${target.username}**`,
+          true
+        )
+        .setTimestamp();
+      break;
+  }
+  return give_embed;
+}
+
+module.exports = { embed, sell, backpack, give };
