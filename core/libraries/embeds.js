@@ -155,4 +155,32 @@ function give(response, owner, target) {
   return give_embed;
 }
 
-module.exports = { embed, sell, backpack, give };
+function recipe(response) {
+  switch (response.data.status) {
+    case 1:
+      var recipe_embed = new RichEmbed()
+        .setColor('#5cb85c')
+        .setAuthor('Recipe Succes')
+        .setDescription(`You succesfull make ${response.data.item_name}!`)
+        .setTimestamp();
+      break;
+    case -1:
+      var missing = '';
+      response.data.missing.forEach(function(value) {
+        missing += `**${value}** \n`;
+      });
+
+      var recipe_embed = new RichEmbed()
+        .setColor('#FF0000')
+        .setAuthor('Recipe Fail')
+        .setDescription(
+          "Sadly, You don't have all of the items required by recipe!"
+        )
+        .addField('Missing Items', missing, true)
+        .setTimestamp();
+      break;
+  }
+  return recipe_embed;
+}
+
+module.exports = { embed, sell, backpack, give, recipe };

@@ -29,3 +29,5 @@ Route::POST('/api/v1/user/daily', 'UserController@daily');
 Route::POST('/api/v1/user/item/sell', 'UserItemsController@sell');
 
 Route::POST('/api/v1/user/item/give', 'UserItemsController@give');
+
+Route::POST('/api/v1/user/recipe/make', 'RecipeController@make');
