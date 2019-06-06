@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando'); // Common
 const { RichEmbed } = require('discord.js'); // Common
 const axios = require('axios'); // HTTP Client
-const embeds = require('../../core/libraries/embeds');
+const embeds = require('../../core/libraries/embeds'); /// Embed response library
 
 module.exports = class avatar extends Command {
   constructor(client) {
@@ -17,7 +17,7 @@ module.exports = class avatar extends Command {
       args: [
         {
           key: 'item',
-          prompt: 'Which item you would want to sell?  [Name of item or "all"]',
+          prompt: 'Which item you would want to sell? ', /// Currently api only supports direct name of the item.
           type: 'string'
         },
         {
@@ -26,7 +26,7 @@ module.exports = class avatar extends Command {
           type: 'string',
           validate: ammount => {
             if (
-              ammount === '' + parseInt(ammount) ||
+              ammount === '' + parseInt(ammount) || /// Check if ammount =- integer || 'all'.
               ammount.toLowerCase() == 'all'
             ) {
               return true;
@@ -39,6 +39,10 @@ module.exports = class avatar extends Command {
     });
   }
   run(message, { item, ammount }) {
+    ///
+    /// Check docs at https://pitchre.github.io/Unknown-Koala/#/api/api?id=sell
+    ///
+
     axios
       .post(process.env.BACKEND_HOST + `api/v1/user/item/sell`, {
         discord_id: message.author.id,
@@ -46,14 +50,11 @@ module.exports = class avatar extends Command {
         ammount: ammount.toLowerCase()
       })
       .then(function(response) {
-        message.reply(embeds.sell(message, response, item, ammount));
+        message.reply(embeds.sell(message, response, item, ammount)); // To avoid trash lookking code, I excluded embed function.
       })
       .catch(function(error) {
-        // handle error
-        // console.log(error);
+        console.log(error);
       })
-      .finally(function() {
-        // always executed
-      });
+      .finally(function() {});
   }
 };

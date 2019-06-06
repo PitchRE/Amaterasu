@@ -379,6 +379,7 @@ __`discord_id` equal to `target_discord_id` will be always rejected.__
 > `ammount` can be "all". In this case, all items with given name are sold.
 
 > If both, `item_name` and `ammount` are equal to "all", all user items are sold.
+> If `item_name` is "all" and `ammount` is integer, only items with count higher or equal to `ammount` are affected by.
 
 
 
