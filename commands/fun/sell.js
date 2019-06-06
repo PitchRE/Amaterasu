@@ -26,12 +26,12 @@ module.exports = class avatar extends Command {
           type: 'string',
           validate: ammount => {
             if (
-              ammount === '' + parseInt(ammount) || /// Check if ammount =- integer || 'all'.
+              (ammount === '' + parseInt(ammount) && ammount > 0) || /// Check if ammount =- integer || 'all'.
               ammount.toLowerCase() == 'all'
             ) {
               return true;
             } else {
-              return 'Ammount of items must be integer or "all"';
+              return 'Ammount of items must be integer > 0 or "all"';
             }
           }
         }
