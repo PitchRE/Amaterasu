@@ -217,7 +217,6 @@ __`discord_id` equal to `target_discord_id` will be always rejected.__
       });
       ```
 
-```
 
 
 #### Note
@@ -367,7 +366,7 @@ __`discord_id` equal to `target_discord_id` will be always rejected.__
 
 
 - `discord_id`: Discord id. (unique).
-- `item_name`: Name of item to sell. (string)
+- `item_name`: Name of item to sell or rarity (string)
 - `ammount`: Number of items to sell. (int)
 
 
@@ -377,9 +376,15 @@ __`discord_id` equal to `target_discord_id` will be always rejected.__
 > `item_name` can be "all". In this case all user items are affected by this command. 
 >
 > `ammount` can be "all". In this case, all items with given name are sold.
+>
+> `item_name` can be name of rarity type, in this case all items with given rarity are affected by.
+
+
+
 
 > If both, `item_name` and `ammount` are equal to "all", all user items are sold.
-
+> If `item_name` is "all" and `ammount` is integer, only items with count higher or equal to `ammount` are affected by.
+> If  `item_name` is rarity type, and `ammount` is integer, items with  more or equaal to `ammount` are affected by.
 
 
 #### Response
@@ -479,4 +484,62 @@ __If both, `item_name` and `ammount` are equal to "all"__
       .finally(function() {
         // always executed
       });
+```
+
+
+### Give
+
+
+`
+   /api/v1/user/give
+`
+
+- Type: **POST** 	
+
+>Gives item from user A to user B
+
+>Used in give command.
+
+#### Params
+
+
+- `discord_id`: Discord id. (owner of item) (unique).
+- `target_discord_id` Discord ID  (give item to this person).
+- `item_name` Name of item to give.
+- `ammount` Ammount of items to give.
+
+
+#### Possible Responses
+
+
+`-1` : No account. __Rejected__
+
+`-2` : Not enought items/item not found. __Rejected__
+
+`1` : User had this item before, succes.
+
+`2` : User never had this item before, succes.
+
+
+
+
+#### Example
+
+```javascript
+ run(message, { item, ammount, target }) {
+    axios
+      .post(process.env.BACKEND_HOST + `api/v1/user/item/give`, {
+        discord_id: message.author.id,
+        target_discord_id: target.id,
+        item_name: item.toLowerCase(),
+        ammount: ammount
+      })
+      .then(function(response) {
+        return message.reply(embeds.give(response, message.author, target));
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+      .finally(function() {});
+
 ```

@@ -22,6 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('reputation')->default();
             $table->integer('cash')->default(500);
+            $table->timestamp('daily_date')->default('1999-12-10 19:48:37');
+            $table->integer('daily_cash')->default(500);
+            $table->integer('daily_train')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
