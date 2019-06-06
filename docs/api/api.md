@@ -217,7 +217,6 @@ __`discord_id` equal to `target_discord_id` will be always rejected.__
       });
       ```
 
-```
 
 
 #### Note

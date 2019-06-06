@@ -21,6 +21,11 @@ module.exports = class avatar extends Command {
   async run(message) {
     const msg = await message.reply('Rolling');
 
+    /// More about this edpoint is api docs.
+    /// Bot doesn't have anything to do with droping items.
+    /// Processing/backend handles that.
+    /// Item cooldown is handled localy/bot side (currently, will be changed after adding skills.)
+
     axios
       .post(process.env.BACKEND_HOST + `api/v1/user/item/random`, {
         discord_id: message.author.id
