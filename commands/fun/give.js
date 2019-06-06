@@ -23,7 +23,14 @@ module.exports = class avatar extends Command {
         {
           key: 'ammount',
           prompt: 'How much items you would want to give?',
-          type: 'integer'
+          type: 'integer',
+          validate: ammount => {
+            if (ammount > 0) {
+              return true;
+            } else {
+              return 'Ammount of items must be higher than 0.';
+            }
+          }
         },
         {
           key: 'target',
@@ -34,6 +41,10 @@ module.exports = class avatar extends Command {
     });
   }
   run(message, { item, ammount, target }) {
+    if (message.author == target) {
+      return message.reply('You cannot give yourself a item.');
+    }
+
     axios
       .post(process.env.BACKEND_HOST + `api/v1/user/item/give`, {
         discord_id: message.author.id,
