@@ -40,7 +40,7 @@ module.exports = class avatar extends Command {
   }
   run(message, { item, ammount }) {
     ///
-    /// Check docs at https://pitchre.github.io/Unknown-Koala/#/api/api?id=sell
+    /// Check docs at https://pitchre.github.io/Amaterasu/#/api/api?id=sell
     ///
 
     axios
