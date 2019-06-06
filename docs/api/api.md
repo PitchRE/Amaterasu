@@ -485,3 +485,61 @@ __If both, `item_name` and `ammount` are equal to "all"__
         // always executed
       });
 ```
+
+
+### Give
+
+
+`
+   /api/v1/user/give
+`
+
+- Type: **POST** 	
+
+>Gives item from user A to user B
+
+>Used in give command.
+
+#### Params
+
+
+- `discord_id`: Discord id. (owner of item) (unique).
+- `target_discord_id` Discord ID  (give item to this person).
+- `item_name` Name of item to give.
+- `ammount` Ammount of items to give.
+
+
+#### Possible Responses
+
+
+`-1` : No account. __Rejected__
+
+`-2` : Not enought items/item not found. __Rejected__
+
+`1` : User had this item before, succes.
+
+`2` : User never had this item before, succes.
+
+
+
+
+#### Example
+
+```javascript
+ run(message, { item, ammount, target }) {
+    axios
+      .post(process.env.BACKEND_HOST + `api/v1/user/item/give`, {
+        discord_id: message.author.id,
+        target_discord_id: target.id,
+        item_name: item.toLowerCase(),
+        ammount: ammount
+      })
+      .then(function(response) {
+        return message.reply(embeds.give(response, message.author, target));
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+      .finally(function() {});
+
+```

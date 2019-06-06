@@ -251,7 +251,7 @@ class UserItemsController extends Controller
             $to_give->increment('count', $request->ammount);
             $to_give->save();
 
-            return response()->json(["status" => 1, 'ammount' => $request->ammount, 'item_name' => $item_to_give->item_data->name], 201); /// No item, increase . Achiv
+            return response()->json(["status" => 1, 'ammount' => $request->ammount, 'item_name' => $item_to_give->item_data->name], 201); ///item exist, increase . 
         } else {
             $new = new User_items;
             $new->discord_id = $request->target_discord_id;
