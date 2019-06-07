@@ -142,38 +142,32 @@ Status: `-1`
 
 ##### Request
 
-````javascript
-
- run(message, { type }) {
-    axios
-      .post(process.env.BACKEND_HOST + `api/v1/user/recipes/${type}`, {
-        discord_id: message.author.id
-      })
-      .then(function(response) {
-        switch (type == 'available') {
-          case true:
-            message.reply(embeds.recipesAvailable(response));
-            break;
-          case false:
-            message.reply(embeds.recipesAll(response));
-            break;
-        }
-        console.log(response.data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      })
-      .finally(function() {});
-      ```
-
+```javascript
+run(message, { type }) {
+axios
+.post(process.env.BACKEND_HOST + `api/v1/user/recipes/${type}`, {
+discord_id: message.author.id
+})
+.then(function(response) {
+switch (type == 'available') {
+case true:
+message.reply(embeds.recipesAvailable(response));
+break;
+case false:
+message.reply(embeds.recipesAll(response));
+break;
+}
+console.log(response.data);
+})
+.catch(function(error) {
+console.log(error);
+})
+.finally(function() {});
+```
 
 ##### Embed
 
-
-
 ```javascript
-
-
 function recipesAvailable(response) {
   switch (response.data.status) {
     case -1:
@@ -201,4 +195,4 @@ function recipesAvailable(response) {
   }
   return recipes_embed;
 }
-````
+```
