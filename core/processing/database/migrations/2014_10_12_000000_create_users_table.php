@@ -25,6 +25,10 @@ class CreateUsersTable extends Migration
             $table->timestamp('daily_date')->default('1999-12-10 19:48:37');
             $table->integer('daily_cash')->default(500);
             $table->integer('daily_train')->default(0);
+            $table->integer('level')->default(1);
+            $table->integer('xp')->default(0);
+            $table->integer('xp_needed')->default(5000);
+            $table->integer('messages_count')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

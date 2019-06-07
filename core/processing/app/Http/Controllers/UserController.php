@@ -11,27 +11,34 @@ class UserController extends Controller
 {
     public function check(Request $request)
     {
-        if (User::where('discord_id', '=', $request->discord_id)->count() > 0) {
+        $user = User::find($request->discord_id);
+        if ($user != null) {
 
             generate_log($request);
 
+            $xp = 50 + rand(5, 15);
+
+            $user->increment('xp', $xp);
+
+            $user->increment('messages_count');
+            if ($user->xp >= $user->xp_needed) {
+                $user->increment('level');
+                $xp_to_next_level = $user->xp / 100;
+                $xp_to_next_level = $xp_to_next_level * 50;
+                $user->increment('xp_needed', $xp_to_next_level);
+                $user->save();
+                return 3;
+            }
 
             return '1';
         } else {
-
             $discordid = $request->discord_id;
-
             $user = new User;
-
             $user->discord_id = $discordid;
-
             $user->name = $request->name;
             $user->password = Hash::make('test');
-
             $user->save();
-
             generate_log($request);
-
             return '2';
         }
     }
