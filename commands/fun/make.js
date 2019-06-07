@@ -6,10 +6,10 @@ const embeds = require('../../core/libraries/embeds'); /// Embed response librar
 module.exports = class avatar extends Command {
   constructor(client) {
     super(client, {
-      name: 'recipe',
+      name: 'make',
       group: 'fun',
-      memberName: 'recipe',
-      description: 'Just recipe',
+      memberName: 'make',
+      description: 'Make item from recipe.',
       throttling: {
         usages: 2,
         duration: 10
