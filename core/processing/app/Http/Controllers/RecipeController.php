@@ -66,4 +66,50 @@ class RecipeController extends Controller
         }
         return response()->json(["status" => -1, 'missing' => $missing], 201);
     }
+
+
+
+    public function available(Request $request)
+    {
+        $canMake = array();
+
+        $Recipes = Recipe::all();
+
+
+        foreach ($Recipes as $recipe) {
+
+            $item_1_res = User_items::where('discord_id', $request->discord_id)->where('item_id', $recipe->item_1)->where('count', '>', 0)->first();
+            $item_2_res = User_items::where('discord_id', $request->discord_id)->where('item_id', $recipe->item_2)->where('count', '>', 0)->first();
+            $item_3_res = User_items::where('discord_id', $request->discord_id)->where('item_id', $recipe->item_3)->where('count', '>', 0)->first();
+            $item_4_res = User_items::where('discord_id', $request->discord_id)->where('item_id', $recipe->item_4)->where('count', '>', 0)->first();
+            $item_5_res = User_items::where('discord_id', $request->discord_id)->where('item_id', $recipe->item_5)->where('count', '>', 0)->first();
+
+
+            if ($recipe->item_1 == null) $item_1_res = 'ignore';
+            if ($recipe->item_2 == null) $item_2_res = 'ignore';
+            if ($recipe->item_3 == null) $item_3_res = 'ignore';
+            if ($recipe->item_4 == null) $item_4_res = 'ignore';
+            if ($recipe->item_5 == null) $item_5_res = 'ignore';
+
+            if ($item_1_res != null && $item_2_res != null && $item_3_res != null && $item_4_res != null && $item_5_res != null) array_push($canMake, $recipe->RecipeResult->name);
+        }
+
+        if (empty($canMake)) {
+            return response()->json(["status" => -1], 201);
+        } else {
+            return response()->json(["status" => 1, 'canMake' => $canMake], 201);
+        }
+    }
+
+
+    public function all(Request $request)
+    {
+
+
+
+        $Recipes = Recipe::with('RecipeResult')->get()->pluck('RecipeResult.name');
+
+
+        return response()->json(["status" => 1, 'recipes' => $Recipes], 201);
+    }
 }
