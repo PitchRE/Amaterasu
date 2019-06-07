@@ -1,45 +1,57 @@
 # Recipes Related Endpoints.
 
-
-
 ### Make
 
+`/api/v1/user/recipe/make`
 
-`
-/api/v1/user/recipe/make
-`
-
-- Type: **POST** 	
+- Type: **POST**
 
 > Makes item from recipe.
 
-
-
-#### Params 
-
+#### Params
 
 - `discord_id`: Discord id. (unique).
 - `item_name`: Name of recipe/item to make.
 
-> Used in __make__ command.
-
+> Used in **make** command.
 
 #### Possible Responses
 
 Status: `1`
+
 > Returns `item_name`.
 
+```json
+{
+  "status": 1,
+  "item_name": "Candy"
+}
+```
+
 Status: `-1`
+
 > Returns array of missing items to make recipe.
 
+```json
+{
+  "status": -1,
+  "missing": ["Jelly", "The Story Begins"]
+}
+```
 
+Status: `-2`
+
+> There is no such recipe with that name.
+
+```json
+{
+  "status": -2
+}
+```
 
 #### Example
 
-
 > Using Axios.
-
-
 
 ```javascript
 
@@ -62,28 +74,17 @@ Status: `-1`
 
 ```
 
-
-
 ### All
 
+`/api/v1/user/recipes/all`
 
-
-`
-/api/v1/user/recipes/all
-`
-
-- Type: **POST** 	
-
+- Type: **POST**
 
 > Returns all of existing recipes.
 
-
-
-#### Params 
+#### Params
 
 - None.
-
-
 
 #### Possible Responses
 
@@ -91,51 +92,57 @@ Status: `1`
 
 > Returns array of names of all recipes.
 
-
-
-
-
+```json
+{
+  "status": 1,
+  "recipes": ["Cookie Jar", "Candy"]
+}
+```
 
 ### Available
-
 
 ```
 /api/v1/user/recipes/available
 ```
 
-
-- Type: **POST** 	
-
+- Type: **POST**
 
 > Returns array of recipes, which user can make. (have items to make)
 
-
-#### Params 
-
+#### Params
 
 - `discord_id`: Discord id. (unique).
-
-
 
 #### Possible Responses
 
 Status: `1`
+
 > Returns array `canMake` of recipes which user can make.
 
+```json
+{
+  "status": 1,
+  "canMake": ["Cookie Jar", "Candy"]
+}
+```
+
 Status: `-1`
+
 > There is no recipes which user can make.
 
-
+```json
+{
+  "status": -1
+}
+```
 
 #### Example
 
-
 > Using Axios and Rich Embeds.
-
 
 ##### Request
 
-```javascript
+````javascript
 
  run(message, { type }) {
     axios

@@ -179,6 +179,13 @@ function recipe(response) {
         .addField('Missing Items', missing, true)
         .setTimestamp();
       break;
+    case -2:
+      var recipe_embed = new RichEmbed()
+        .setColor('#FF0000')
+        .setAuthor('Recipe Fail')
+        .setDescription('Sadly, There is no recipe with that name!')
+        .setTimestamp();
+      break;
   }
   return recipe_embed;
 }

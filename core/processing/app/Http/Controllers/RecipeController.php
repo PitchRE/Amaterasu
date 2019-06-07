@@ -24,9 +24,10 @@ class RecipeController extends Controller
             $q->where('name', $request->item_name);
         })->first();
 
-
+        if ($recipe == null) return response()->json(["status" => -2], 201);
 
         $item_1_res = User_items::where('discord_id', $request->discord_id)->where('item_id', $recipe->item_1)->where('count', '>', 0)->first();
+
         $item_2_res = User_items::where('discord_id', $request->discord_id)->where('item_id', $recipe->item_2)->where('count', '>', 0)->first();
         $item_3_res = User_items::where('discord_id', $request->discord_id)->where('item_id', $recipe->item_3)->where('count', '>', 0)->first();
         $item_4_res = User_items::where('discord_id', $request->discord_id)->where('item_id', $recipe->item_4)->where('count', '>', 0)->first();
