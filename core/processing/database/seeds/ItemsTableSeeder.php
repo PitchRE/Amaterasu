@@ -67,5 +67,13 @@ class ItemsTableSeeder extends Seeder
             'image' => 'storage/TWICE/albums/TWICEcoaster_LANE_2.jpg',
             'color' => '#3160ed'
         ]);
+
+        DB::table('items')->insert([
+            'name' => 'Cookie Jar',
+            'rarity' => 'good',
+            'value' => 500,
+            'image' => 'storage/TWICE/albums/TWICEcoaster_LANE_2.jpg',
+            'color' => '#3160ed'
+        ]);
     }
 }

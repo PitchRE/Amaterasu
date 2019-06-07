@@ -155,4 +155,93 @@ function give(response, owner, target) {
   return give_embed;
 }
 
-module.exports = { embed, sell, backpack, give };
+function recipe(response) {
+  switch (response.data.status) {
+    case 1:
+      var recipe_embed = new RichEmbed()
+        .setColor('#5cb85c')
+        .setAuthor('Recipe Succes')
+        .setDescription(`You succesfull make ${response.data.item_name}!`)
+        .setTimestamp();
+      break;
+    case -1:
+      var missing = '';
+      response.data.missing.forEach(function(value) {
+        missing += `**${value}** \n`;
+      });
+
+      var recipe_embed = new RichEmbed()
+        .setColor('#FF0000')
+        .setAuthor('Recipe Fail')
+        .setDescription(
+          "Sadly, You don't have all of the items required by recipe!"
+        )
+        .addField('Missing Items', missing, true)
+        .setTimestamp();
+      break;
+    case -2:
+      var recipe_embed = new RichEmbed()
+        .setColor('#FF0000')
+        .setAuthor('Recipe Fail')
+        .setDescription('Sadly, There is no recipe with that name!')
+        .setTimestamp();
+      break;
+  }
+  return recipe_embed;
+}
+
+function recipesAvailable(response) {
+  switch (response.data.status) {
+    case -1:
+      var recipes_embed = new RichEmbed()
+        .setColor('#FF0000')
+        .setAuthor('Recipes')
+        .setDescription(
+          `Sadly, You don't have enought items to make any of recipes`
+        )
+        .setTimestamp();
+      break;
+    case 1:
+      var Available = '';
+      response.data.canMake.forEach(function(value) {
+        Available += `**${value}** \n`;
+      });
+
+      var recipes_embed = new RichEmbed()
+        .setColor('#5cb85c')
+        .setAuthor('Recipes')
+        .setDescription('Hurrey! You can make some items from recipes!')
+        .addField('Available recipes to make', Available, true)
+        .setTimestamp();
+      break;
+  }
+  return recipes_embed;
+}
+
+function recipesAll(response) {
+  var recipes = '';
+  response.data.recipes.forEach(function(value) {
+    recipes += `**${value}** \n`;
+  });
+
+  switch (response.data.status) {
+    case 1:
+      var recipes_embed = new RichEmbed()
+        .setColor('#8A2BE2')
+        .setAuthor('Recipes')
+        .setDescription(recipes)
+        .setTimestamp();
+      break;
+  }
+  return recipes_embed;
+}
+
+module.exports = {
+  embed,
+  sell,
+  backpack,
+  give,
+  recipe,
+  recipesAvailable,
+  recipesAll
+};
