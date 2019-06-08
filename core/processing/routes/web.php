@@ -35,3 +35,6 @@ Route::POST('/api/v1/user/recipe/make', 'RecipeController@make');
 Route::POST('/api/v1/user/recipes/all', 'RecipeController@all');
 
 Route::POST('/api/v1/user/recipes/available', 'RecipeController@available');
+
+
+Route::GET('/api/test', 'UserController@ttest');

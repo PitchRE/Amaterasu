@@ -31,7 +31,7 @@ module.exports = class avatar extends Command {
         discord_id: message.author.id
       })
       .then(function(response) {
-        console.log(func.embed(response, message));
+        console.log(response.data);
         msg.edit(func.embed(response, message));
       })
       .catch(function(error) {

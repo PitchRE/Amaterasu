@@ -36,9 +36,24 @@ class UserItemsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+
+
+
     public function create(Request $request)
     {
-        $RandItem = Items::inRandomOrder()->firstorFail();
+
+        $user = User::find($request->discord_id);
+        $RandItem = Items::Where('rarity', rarity($user))->inRandomOrder()->firstorFail();
 
         if (User_items::where('discord_id', $request->discord_id)->where('item_id', $RandItem->id)->count() > 0) {
 

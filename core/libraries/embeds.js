@@ -5,7 +5,7 @@ function embed(response, message) {
   ///
   ///
 
-  var good = new RichEmbed()
+  var common = new RichEmbed()
     .setColor(response.data.color)
     .setTitle(response.data.name)
     .setAuthor(message.author.username)
@@ -16,26 +16,24 @@ function embed(response, message) {
 
     .setTimestamp();
 
-  var nice = new RichEmbed()
+  var uncommon = new RichEmbed()
     .setColor(response.data.color)
     .setTitle(response.data.name)
     .setAuthor(message.author.username)
     .setDescription(
-      ` \n You found ${response.data.name} ${response.data.image} ! Its ${
-        response.data.rarity
-      }!`
+      ` \n You found ${response.data.name} ! Its ${response.data.rarity}!`
     )
-
+    .setThumbnail(process.env.BACKEND_HOST + response.data.image)
     .setTimestamp();
 
   switch (response.data.rarity) {
-    case 'nice':
-      return nice;
+    case 'common':
+      return common;
       break;
-    case 'good':
-      return good;
+    case 'uncommon':
+      return uncommon;
       break;
-    case 'rare':
+    case 'uncommon':
       break;
     case 'legendary':
       break;

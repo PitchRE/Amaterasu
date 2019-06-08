@@ -113,4 +113,9 @@ class UserController extends Controller
             );
         }
     }
+
+    public function ttest()
+    {
+        return rarity();
+    }
 }
