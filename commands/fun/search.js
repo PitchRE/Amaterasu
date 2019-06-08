@@ -2,7 +2,7 @@ const { Command } = require('discord.js-commando'); // Common
 const { RichEmbed } = require('discord.js'); // Common
 const axios = require('axios'); // HTTP Client
 const bot_err = require('../../core/libraries/errors');
-const func = require('../../core/libraries/embeds');
+const embeds = require('../../core/libraries/embeds'); /// Embed response library
 
 module.exports = class avatar extends Command {
   constructor(client) {
@@ -31,8 +31,7 @@ module.exports = class avatar extends Command {
         discord_id: message.author.id
       })
       .then(function(response) {
-        console.log(response.data);
-        msg.edit(func.embed(response, message));
+        msg.edit(embeds.rarity_embed(response, message));
       })
       .catch(function(error) {
         // handle error

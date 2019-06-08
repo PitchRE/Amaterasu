@@ -43,7 +43,7 @@ function rarity($user)
     $very_rare = 80;
     $legendary = 20;
 
-    $user_skill_level = $user->level;
+    $user_skill_level = $user->user_skills->luck;
 
 
     /**
@@ -84,7 +84,7 @@ function rarity($user)
     }
 
     for ($i = 0; $i < $very_rare; $i++) {
-        array_push($chance, "very rare");
+        array_push($chance, "epic");
     }
 
     for ($i = 0; $i < $legendary; $i++) {

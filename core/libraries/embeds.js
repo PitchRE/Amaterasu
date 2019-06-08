@@ -1,44 +1,62 @@
 const { RichEmbed } = require('discord.js'); // Common
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-function embed(response, message) {
-  ///
-  ///
-  ///
-
-  var common = new RichEmbed()
-    .setColor(response.data.color)
-    .setTitle(response.data.name)
-    .setAuthor(message.author.username)
-    .setDescription(
-      `You found ${response.data.name} ! Its ${response.data.rarity}!`
-    )
-    .setThumbnail(process.env.BACKEND_HOST + response.data.image)
-
-    .setTimestamp();
-
-  var uncommon = new RichEmbed()
-    .setColor(response.data.color)
-    .setTitle(response.data.name)
-    .setAuthor(message.author.username)
-    .setDescription(
-      ` \n You found ${response.data.name} ! Its ${response.data.rarity}!`
-    )
-    .setThumbnail(process.env.BACKEND_HOST + response.data.image)
-    .setTimestamp();
-
-  switch (response.data.rarity) {
-    case 'common':
-      return common;
+function rarity_embed(response, message) {
+  var color = '#d3d3d3';
+  switch (response.data.rarity.toUpperCase()) {
+    case 'COMMON':
+      color = '#ffffff';
       break;
-    case 'uncommon':
-      return uncommon;
+    case 'UNCOMMON'.toUpperCase():
+      color = '#2fe20f';
       break;
-    case 'uncommon':
+    case 'RARE':
+      color = '#0f39e0';
       break;
-    case 'legendary':
+    case 'EPIC':
+      color = '#8f12c9';
+      break;
+    case 'LEGENDARY':
+      color = '#ffd700';
       break;
   }
+
+  let embed = new RichEmbed()
+
+    .setTitle('Loot')
+
+    .setColor(color)
+    .addField('Name', response.data.name, true)
+    .addField('Rarity', response.data.rarity, true)
+    .addField('In Inventory', response.data.count, true)
+    .setThumbnail(process.env.BACKEND_HOST + response.data.image)
+    .setFooter(message.author.username, message.author.avatarURL)
+    .setTimestamp();
+
+  return embed;
 }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 function sell(message, response, item, ammount) {
   let cash = response.data.cash;
@@ -100,6 +118,14 @@ function sell(message, response, item, ammount) {
 
   return my_embed;
 }
+
+//
+//
+//
+//
+//
+//
+//
 
 function backpack(response, text) {
   var bp = new RichEmbed()
@@ -235,7 +261,7 @@ function recipesAll(response) {
 }
 
 module.exports = {
-  embed,
+  rarity_embed,
   sell,
   backpack,
   give,

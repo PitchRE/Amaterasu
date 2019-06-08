@@ -19,61 +19,61 @@ class ItemsTableSeeder extends Seeder
 
         DB::table('items')->insert([
             'name' => 'Candy',
-            'rarity' => 'nice',
+            'rarity' => 'Common',
             'value' => 500,
             'image' => '🍬',
-            'color' => '#3160ed'
+
         ]);
 
         DB::table('items')->insert([
             'name' => 'Jelly',
-            'rarity' => 'nice',
+            'rarity' => 'Common',
             'value' => 500,
             'image' => '🍓',
-            'color' => '#3160ed'
+
         ]);
 
         DB::table('items')->insert([
             'name' => 'The Story Begins',
-            'rarity' => 'good',
+            'rarity' => 'Uncommon',
             'value' => 500,
             'image' => 'storage/TWICE/albums/TheStoryBegins.jpg',
-            'color' => '#3160ed'
+
         ]);
 
         DB::table('items')->insert([
             'name' => 'PAGE TWO',
-            'rarity' => 'good',
+            'rarity' => 'Rare',
             'value' => 500,
             'image' => 'storage/TWICE/albums/PAGETWO.jpg',
-            'color' => '#3160ed'
+
         ]);
 
 
 
         DB::table('items')->insert([
             'name' => 'Twicecoaster：lane1',
-            'rarity' => 'good',
+            'rarity' => 'Rare',
             'value' => 500,
             'image' => 'storage/TWICE/albums/TWICEcoaster_LANE_1.jpg',
-            'color' => '#3160ed'
+
         ]);
 
 
         DB::table('items')->insert([
             'name' => 'Twicecoaster：Lane 2',
-            'rarity' => 'good',
+            'rarity' => 'Epic',
             'value' => 500,
             'image' => 'storage/TWICE/albums/TWICEcoaster_LANE_2.jpg',
-            'color' => '#3160ed'
+
         ]);
 
         DB::table('items')->insert([
             'name' => 'Cookie Jar',
-            'rarity' => 'good',
+            'rarity' => 'Common',
             'value' => 500,
             'image' => 'storage/TWICE/albums/TWICEcoaster_LANE_2.jpg',
-            'color' => '#3160ed'
+            'dropable' => false,
         ]);
     }
 }
