@@ -4,7 +4,7 @@ const axios = require('axios'); // HTTP Client
 const bot_err = require('../../core/libraries/errors');
 const embeds = require('../../core/libraries/embeds'); /// Embed response library
 
-module.exports = class avatar extends Command {
+module.exports = class Search extends Command {
   constructor(client) {
     super(client, {
       name: 'search',

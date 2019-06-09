@@ -17,6 +17,7 @@ class CreateUserSkillsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('discord_id');
             $table->integer('luck')->default(0);
+            $table->integer('luck_price')->default(500);
             $table->timestamps();
         });
 

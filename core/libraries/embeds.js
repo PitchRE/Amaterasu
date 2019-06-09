@@ -1,4 +1,5 @@
 const { RichEmbed } = require('discord.js'); // Common
+const axios = require('axios'); // HTTP Client
 //
 //
 //
@@ -91,7 +92,6 @@ function sell(message, response, item, ammount) {
         .setColor('#5cb85c')
         .setAuthor('Transaction Succes')
         .setDescription(`${response.data.ammount}x ${response.data.item}`)
-
         .addField('Balance', balance, true)
         .addField('Income', cash, true)
         .setTimestamp()
@@ -260,6 +260,32 @@ function recipesAll(response) {
   return recipes_embed;
 }
 
+function boutghtSkill(response, message) {
+  var skill_raised = new RichEmbed()
+    .setAuthor('Skill Raised')
+    .setDescription('Succesfully raised a skill.')
+    .setColor('#FFD700')
+    .addField(`Current ${response.data.name} Level`, response.data.level, true)
+    .addField('Current Price', response.data.price, true)
+    .setFooter(message.author.username, message.author.avatarURL)
+    .setTimestamp();
+  return skill_raised;
+}
+
+function chances(response, message) {
+  var chances = new RichEmbed()
+    .setAuthor(`Chances | ${response.data.luck} Luck`)
+    .setColor('#FFD700')
+    .addField('Legendary', response.data.legendary)
+    .addField('Epic', response.data.epic)
+    .addField('Rare', response.data.rare)
+    .addField('Uncommon', response.data.uncommon)
+    .addField('Common', response.data.common)
+    .setFooter(message.author.username, message.author.avatarURL)
+    .setTimestamp();
+  return chances;
+}
+
 module.exports = {
   rarity_embed,
   sell,
@@ -267,5 +293,7 @@ module.exports = {
   give,
   recipe,
   recipesAvailable,
-  recipesAll
+  recipesAll,
+  boutghtSkill,
+  chances
 };

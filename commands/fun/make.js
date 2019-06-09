@@ -3,7 +3,7 @@ const { RichEmbed } = require('discord.js'); // Common
 const axios = require('axios'); // HTTP Client
 const embeds = require('../../core/libraries/embeds'); /// Embed response library
 
-module.exports = class avatar extends Command {
+module.exports = class Make extends Command {
   constructor(client) {
     super(client, {
       name: 'make',

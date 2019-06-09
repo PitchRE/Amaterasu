@@ -4,7 +4,7 @@ const bot_err = require('../../core/libraries/errors');
 
 const axios = require('axios'); // HTTP Client
 
-module.exports = class avatar extends Command {
+module.exports = class Rep extends Command {
   constructor(client) {
     super(client, {
       name: 'rep',

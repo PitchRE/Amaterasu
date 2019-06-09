@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\UserSkill;
 use Illuminate\Http\Request;
+use App\User;
 
 class UserSkillController extends Controller
 {
@@ -12,74 +13,44 @@ class UserSkillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = User::find($request->discord_id);
+        if ($user == null) return 'err no such user';
+        $skill = UserSkill::find($request->discord_id);
+
+
+        $luck_bolean = false;
+
+
+        if ($user->cash >= $skill->luck_price) $luck_bolean = true;
+
+
+        return response()->json(["status" => 1, 'luck' => $user->user_skills->luck, 'luck_price' => $user->user_skills->luck_price, 'luck_bolean' => $luck_bolean, 'balance' => $user->cash], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function buy(Request $request)
     {
-        //
-    }
+        $user = User::find($request->discord_id);
+        if ($user == null) return 'err no such user';
+        $skill = UserSkill::find($request->discord_id);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\UserSkill  $userSkill
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserSkill $userSkill)
-    {
-        //
-    }
+        switch ($request->skill_name) {
+            case 'Luck':
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\UserSkill  $userSkill
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserSkill $userSkill)
-    {
-        //
-    }
+                if ($skill->luck_price >  $user->cash) return response()->json(["status" => -1,], 201);
+                $val1 = $user->user_skills->luck_price;
+                $val1 = ($val1 / 100) * 30;
+                $user->decrement('cash', $skill->luck_price);
+                $skill->increment('luck');
+                $skill->increment('luck_price', $val1);
+                return response()->json(["status" => 1, 'level' => $skill->luck, 'price' => $skill->luck_price, 'name' => $request->skill_name], 201);
+                break;
+            default:
+                return response()->json(["status" => -2], 201);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\UserSkill  $userSkill
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, UserSkill $userSkill)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\UserSkill  $userSkill
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(UserSkill $userSkill)
-    {
-        //
+                break;
+        }
     }
 }

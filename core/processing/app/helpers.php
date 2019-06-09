@@ -40,7 +40,7 @@ function rarity($user)
     $common = 500;
     $uncommon = 250;
     $rare = 150;
-    $very_rare = 80;
+    $epic = 80;
     $legendary = 20;
 
     $user_skill_level = $user->user_skills->luck;
@@ -57,9 +57,9 @@ function rarity($user)
     for ($i = 0; $i < $user_skill_level; $i++) {
 
 
-        if ($rare < 250) $rare += 3;
-        if ($very_rare < 180) $very_rare += 2;
-        if ($legendary < 140) $legendary += 0.1;
+        if ($rare < 250) $rare += 1.2;
+        if ($epic < 180) $epic += 0.7;
+        if ($legendary < 140) $legendary += 0.3;
     }
 
     /**
@@ -83,7 +83,7 @@ function rarity($user)
         array_push($chance, "rare");
     }
 
-    for ($i = 0; $i < $very_rare; $i++) {
+    for ($i = 0; $i < $epic; $i++) {
         array_push($chance, "epic");
     }
 
@@ -101,7 +101,7 @@ function rarity($user)
     // $myObj->common = $common;
     // $myObj->uncommon = $uncommon;
     // $myObj->rare = $rare;
-    // $myObj->very_rare = $very_rare;
+    // $myObj->epic = $epic;
     // $myObj->legendary = $legendary;
 
     // $myJSON = json_encode($myObj);
@@ -125,4 +125,75 @@ function rarity($user)
     // return response()->json(["common" => $c1, "uncommon" => $c2, "rare" => $c3, "very rare" => $c4, "legendary" => $c5,], 201);
 
     return $chance[array_rand($chance)];
+}
+
+
+function chances($user)
+{
+
+    $common = 500;
+    $uncommon = 250;
+    $rare = 150;
+    $epic = 80;
+    $legendary = 20;
+
+    $user_skill_level = $user->user_skills->luck;
+
+
+    /**
+     * 
+     * Above values will be loaded from database. 
+     * So you can change them for events etc.
+     * 
+     * 
+     */
+
+    for ($i = 0; $i < $user_skill_level; $i++) {
+
+
+        if ($rare < 250) $rare += 1.2;
+        if ($epic < 180) $epic += 0.7;
+        if ($legendary < 140) $legendary += 0.3;
+    }
+
+    /**
+     * Above part is for hardcoding limit.
+     * We want to avoid situation where u can't no more draw common quality/rarity item.
+     */
+
+
+    $chance = array();
+
+
+    for ($i = 0; $i < $common; $i++) {
+        array_push($chance, "common");
+    }
+
+    for ($i = 0; $i < $uncommon; $i++) {
+        array_push($chance, "uncommon");
+    }
+
+    for ($i = 0; $i < $rare; $i++) {
+        array_push($chance, "rare");
+    }
+
+    for ($i = 0; $i < $epic; $i++) {
+        array_push($chance, "epic");
+    }
+
+    for ($i = 0; $i < $legendary; $i++) {
+        array_push($chance, "legendary");
+    }
+
+    $count = count($chance);
+
+    $myObj = new stdClass();
+    $myObj->common = number_format(($common / $count) * 100, 2);
+    $myObj->uncommon = number_format(($uncommon / $count) * 100, 2);
+    $myObj->rare = number_format(($rare / $count) * 100, 2);
+    $myObj->epic = number_format(($epic / $count) * 100, 2);
+    $myObj->legendary = number_format(($legendary / $count) * 100, 2);
+    $myObj->luck = $user->user_skills->luck;
+
+    return $myObj;
 }

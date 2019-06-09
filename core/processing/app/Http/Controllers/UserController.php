@@ -116,6 +116,17 @@ class UserController extends Controller
 
     public function ttest()
     {
-        return rarity();
+        return 43223434211111;
+    }
+
+
+    public function chances(Request $request)
+    {
+
+        $user = User::find($request->discord_id);
+        $obj = chances($user);
+
+
+        return json_encode((array)$obj);
     }
 }
