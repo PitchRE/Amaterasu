@@ -34,36 +34,6 @@ client.login(process.env.BOT_TOKEN);
 /// Logs Module
 
 client.on('message', async message => {
-  // message
-  //   .react(client.emojis.get('586880576426999818'))
-  //   .then(reaction => console.log(typeof reaction));
-
-  if (message.author.bot == false) {
-    //   const cos = message.send('ayyy');
-    //   message.react('👍').then(() => message.react('👎'));
-    //   const filter = (reaction, user) => {
-    //     return (
-    //       ['👍', '👎'].includes(reaction.emoji.name) &&
-    //       user.id === message.author.id
-    //     );
-    //   };
-    //   message
-    //     .awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
-    //     .then(collected => {
-    //       const reaction = collected.first();
-    //       if (reaction.emoji.name === '👍') {
-    //         message.reply('you reacted with a thumbs up.');
-    //       } else {
-    //         message.reply('you reacted with a thumbs down.');
-    //       }
-    //     })
-    //     .catch(collected => {
-    //       console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
-    //       message.reply(
-    //         'you reacted with neither a thumbs up, nor a thumbs down.'
-    //       );
-    //     });
-  }
   if (message.guild === null) return;
   axios
     .post(process.env.BACKEND_HOST + `api/v1/user/check`, {
