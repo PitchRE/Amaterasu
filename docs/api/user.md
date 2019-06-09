@@ -2,21 +2,17 @@
 
 ### Check
 
+`/api/v1/user/check`
 
-`
-   /api/v1/user/check
-`
+- Type: **POST**
 
-- Type: **POST** 	
+> Registers a user if doesn't exist.
 
->Registers a user if doesn't exist.
-
->Logs message.
+> Logs message.
 
 > Used in every user message.
 
 #### Params
-
 
 - `discord_id`: Discord id. (unique).
 - `name`: username.
@@ -27,25 +23,15 @@
 - `channel_name:` Channel name.
 - `content`: Content of message.
 
-
 #### Possible Responses
-
 
 `1` : Log created.
 
-
-
 `2` : User registered.
 
-
-
-
-
-#### Example: 
-
+#### Example:
 
 > Using Axios
-
 
 ```javascript
 client.on('message', async message => {
@@ -71,17 +57,11 @@ client.on('message', async message => {
 });
 ```
 
-
-
 ### Reputation
 
+`/api/v1/user/rep`
 
-`
-/api/v1/user/rep
-`
-
-
-- Type: **POST** 
+- Type: **POST**
 
 > Gives reputation point to `target_discord_id`.
 > Cooldown is handled in backend.
@@ -90,20 +70,18 @@ client.on('message', async message => {
 
 #### Params
 
-
 - `discord_id`: Discord id. (unique).
 - `target_discord_id`: Discord id. (unique).
 
-
 #### Possible Responses
 
->Status 2
+> Status 2
 
 ```json
 {
-    "status": 2,
-    "points": 3,
-    "time": -1
+  "status": 2,
+  "points": 3,
+  "time": -1
 }
 ```
 
@@ -113,31 +91,29 @@ Points: Number of reputation points which `target_discord_id` have.
 
 Time -1: Reputation point just given. No cooldown data.
 
-
-
 > Status -1
 
 ```json
 {
-    "status": -1,
-    "points": 0,
-    "time": 57
+  "status": -1,
+  "points": 0,
+  "time": 57
 }
 ```
+
 Status -1: There is cooldown.
 
 Points: Number of reputation points which `target_discord_id` have.
 
 Time 57: Cooldown left in minutes.
 
-
 > Status 4
 
 ```json
 {
-    "status": 4,
-    "points": 0,
-    "time": 56
+  "status": 4,
+  "points": 0,
+  "time": 56
 }
 ```
 
@@ -147,33 +123,31 @@ Points: Number of reputation points which `target_discord_id` have.
 
 Time 56: Cooldown left in minutes.
 
-__`discord_id` equal to `target_discord_id` will be always rejected.__
-
+**`discord_id` equal to `target_discord_id` will be always rejected.**
 
 > Status 3
 
 ```json
 {
-    "status": 3,
-    "points": 3,
-    "time": -1
+  "status": 3,
+  "points": 3,
+  "time": -1
 }
 ```
+
 Status 3: There is no cooldown. Rejected.
 
 Points: Number of reputation points which `target_discord_id` have.
 
 Time -1: There is no cooldown.
 
-__`discord_id` equal to `target_discord_id` will be always rejected.__
+**`discord_id` equal to `target_discord_id` will be always rejected.**
 
-
-
-#### Example: 
+#### Example:
 
 > Using Axios
 
-```javascript
+````javascript
 
  axios
       .post(process.env.BACKEND_HOST + 'api/v1/user/rep', {
@@ -215,10 +189,10 @@ __`discord_id` equal to `target_discord_id` will be always rejected.__
       });
       ```
 
-
+````
 
 #### Note
 
-__`discord_id` equal to `target_discord_id` will be always rejected.__
+**`discord_id` equal to `target_discord_id` will be always rejected.**
 
 > Currently its only usefull to check if user have cooldown or not.

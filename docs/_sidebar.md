@@ -6,3 +6,4 @@
 - [User](api/user.md 'The greatest guide in the world')
 - [Items](api/items.md 'The greatest guide in the world')
 - [Recipes](api/recipes.md)
+- [Skills](api/skills.md)

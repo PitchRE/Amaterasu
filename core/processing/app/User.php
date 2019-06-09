@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(User_items::class, 'discord_id', 'discord_id');
     }
+
+    public function user_skills()
+    {
+        return $this->hasOne(UserSkill::class, 'discord_id', 'discord_id');
+    }
 }

@@ -6,6 +6,7 @@ use App\Events\NewUser;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Reputation;
+use App\UserSkill;
 
 class MakeReputationRecord
 {
@@ -33,5 +34,10 @@ class MakeReputationRecord
         $rep->discord_id = $user->discord_id;
 
         $rep->save();
+
+
+        $skill = new UserSkill;
+        $skill->discord_id = $user->discord_id;
+        $skill->save();
     }
 }

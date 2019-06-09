@@ -2,7 +2,7 @@ const { Command } = require('discord.js-commando'); // Common
 const { RichEmbed } = require('discord.js'); // Common
 const axios = require('axios'); // HTTP Client
 
-module.exports = class avatar extends Command {
+module.exports = class Daily extends Command {
   constructor(client) {
     super(client, {
       name: 'daily',

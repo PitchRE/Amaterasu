@@ -10,7 +10,7 @@ const reactionControls = {
   STOP: '⏹'
 };
 
-module.exports = class avatar extends Command {
+module.exports = class Backpack extends Command {
   constructor(client) {
     super(client, {
       name: 'backpack',

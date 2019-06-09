@@ -1,46 +1,63 @@
 const { RichEmbed } = require('discord.js'); // Common
+const axios = require('axios'); // HTTP Client
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-function embed(response, message) {
-  ///
-  ///
-  ///
-
-  var good = new RichEmbed()
-    .setColor(response.data.color)
-    .setTitle(response.data.name)
-    .setAuthor(message.author.username)
-    .setDescription(
-      `You found ${response.data.name} ! Its ${response.data.rarity}!`
-    )
-    .setThumbnail(process.env.BACKEND_HOST + response.data.image)
-
-    .setTimestamp();
-
-  var nice = new RichEmbed()
-    .setColor(response.data.color)
-    .setTitle(response.data.name)
-    .setAuthor(message.author.username)
-    .setDescription(
-      ` \n You found ${response.data.name} ${response.data.image} ! Its ${
-        response.data.rarity
-      }!`
-    )
-
-    .setTimestamp();
-
-  switch (response.data.rarity) {
-    case 'nice':
-      return nice;
+function rarity_embed(response, message) {
+  var color = '#d3d3d3';
+  switch (response.data.rarity.toUpperCase()) {
+    case 'COMMON':
+      color = '#ffffff';
       break;
-    case 'good':
-      return good;
+    case 'UNCOMMON'.toUpperCase():
+      color = '#2fe20f';
       break;
-    case 'rare':
+    case 'RARE':
+      color = '#0f39e0';
       break;
-    case 'legendary':
+    case 'EPIC':
+      color = '#8f12c9';
+      break;
+    case 'LEGENDARY':
+      color = '#ffd700';
       break;
   }
+
+  let embed = new RichEmbed()
+
+    .setTitle('Loot')
+
+    .setColor(color)
+    .addField('Name', response.data.name, true)
+    .addField('Rarity', response.data.rarity, true)
+    .addField('In Inventory', response.data.count, true)
+    .setThumbnail(process.env.BACKEND_HOST + response.data.image)
+    .setFooter(message.author.username, message.author.avatarURL)
+    .setTimestamp();
+
+  return embed;
 }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 function sell(message, response, item, ammount) {
   let cash = response.data.cash;
@@ -75,7 +92,6 @@ function sell(message, response, item, ammount) {
         .setColor('#5cb85c')
         .setAuthor('Transaction Succes')
         .setDescription(`${response.data.ammount}x ${response.data.item}`)
-
         .addField('Balance', balance, true)
         .addField('Income', cash, true)
         .setTimestamp()
@@ -102,6 +118,14 @@ function sell(message, response, item, ammount) {
 
   return my_embed;
 }
+
+//
+//
+//
+//
+//
+//
+//
 
 function backpack(response, text) {
   var bp = new RichEmbed()
@@ -236,12 +260,40 @@ function recipesAll(response) {
   return recipes_embed;
 }
 
+function boutghtSkill(response, message) {
+  var skill_raised = new RichEmbed()
+    .setAuthor('Skill Raised')
+    .setDescription('Succesfully raised a skill.')
+    .setColor('#FFD700')
+    .addField(`Current ${response.data.name} Level`, response.data.level, true)
+    .addField('Current Price', response.data.price, true)
+    .setFooter(message.author.username, message.author.avatarURL)
+    .setTimestamp();
+  return skill_raised;
+}
+
+function chances(response, message) {
+  var chances = new RichEmbed()
+    .setAuthor(`Chances | ${response.data.luck} Luck`)
+    .setColor('#FFD700')
+    .addField('Legendary', response.data.legendary)
+    .addField('Epic', response.data.epic)
+    .addField('Rare', response.data.rare)
+    .addField('Uncommon', response.data.uncommon)
+    .addField('Common', response.data.common)
+    .setFooter(message.author.username, message.author.avatarURL)
+    .setTimestamp();
+  return chances;
+}
+
 module.exports = {
-  embed,
+  rarity_embed,
   sell,
   backpack,
   give,
   recipe,
   recipesAvailable,
-  recipesAll
+  recipesAll,
+  boutghtSkill,
+  chances
 };

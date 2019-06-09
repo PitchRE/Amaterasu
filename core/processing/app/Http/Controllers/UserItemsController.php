@@ -36,11 +36,29 @@ class UserItemsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+
+
+
     public function create(Request $request)
     {
-        $RandItem = Items::inRandomOrder()->firstorFail();
 
-        if (User_items::where('discord_id', $request->discord_id)->where('item_id', $RandItem->id)->count() > 0) {
+
+        $user = User::find($request->discord_id);
+        $RandItem = Items::Where('rarity', rarity($user))->Where('dropable', true)->inRandomOrder()->firstorFail();
+
+
+        if (User_items::where('discord_id', $request->discord_id)->where('item_id', $RandItem->id)->first() != null) {
+
 
             User_items::where('discord_id', $request->discord_id)->where('item_id', $RandItem->id)->first()->increment('count');
         } else {
@@ -53,7 +71,11 @@ class UserItemsController extends Controller
             $user_item->save();
         }
 
-        return $RandItem;
+        $user_item = User_items::where('discord_id', $request->discord_id)->where('item_id', $RandItem->id)->first();
+
+
+
+        return response()->json(["status" => 1, 'name' => $RandItem->name, 'rarity' => $RandItem->rarity, 'image' => $RandItem->image, 'count' => $user_item->count], 201);
     }
 
 
