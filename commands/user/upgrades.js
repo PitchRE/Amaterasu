@@ -18,7 +18,7 @@ module.exports = class Upgrades extends Command {
   async run(message) {
     const filter = (reaction, user) => {
       return (
-        ['⭐', '2⃣', '3⃣', '❌'].includes(reaction.emoji.name) &&
+        ['⭐', '❌'].includes(reaction.emoji.name) &&
         user.id === message.author.id
       );
     };
