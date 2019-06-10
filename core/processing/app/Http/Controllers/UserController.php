@@ -27,10 +27,14 @@ class UserController extends Controller
                 $xp_to_next_level = $xp_to_next_level * 50;
                 $user->increment('xp_needed', $xp_to_next_level);
                 $user->save();
-                return 3;
+                return response()->json(
+                    ['status' => 3, 'level' => $user->level]
+                );
             }
 
-            return '1';
+            return response()->json(
+                ['status' => 1]
+            );
         } else {
             $discordid = $request->discord_id;
             $user = new User;
@@ -39,7 +43,9 @@ class UserController extends Controller
             $user->password = Hash::make('test');
             $user->save();
             generate_log($request);
-            return '2';
+            return response()->json(
+                ['status' => 2]
+            );
         }
     }
 
@@ -48,14 +54,18 @@ class UserController extends Controller
     public function daily(Request $request)
     {
 
-
-
         $carbon = \Carbon\Carbon::now();
 
 
         $today = $carbon->format('Y-m-d H:i:s');
 
         $user = User::find($request->discord_id);
+
+        if ($user == null) {
+            return response()->json(
+                ['status' => -50]
+            );
+        }
 
         $daily_train_before = $user->daily_train;
 

@@ -27,8 +27,6 @@ module.exports = class Rep extends Command {
     });
   }
   run(message, { user }) {
-    // Check if user mentioned someone | Required
-
     /// HTTP Request to backend.
 
     // Possible Responses :
