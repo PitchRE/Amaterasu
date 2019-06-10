@@ -14,6 +14,9 @@ class RecipeController extends Controller
     public function make(Request $request)
     {
 
+        $user = User::find($request->discord_id);
+        if ($user == null)   return response()->json(["status" => -50,], 201);
+
         $user_items = User_items::where('discord_id', $request->discord_id);
 
 
@@ -72,6 +75,9 @@ class RecipeController extends Controller
 
     public function available(Request $request)
     {
+
+        $user = User::find($request->discord_id);
+        if ($user == null)   return response()->json(["status" => -50,], 201);
         $canMake = array();
 
         $Recipes = Recipe::all();

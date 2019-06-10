@@ -1,6 +1,3 @@
-# Amaterasu
+# Headline
 
-
-
-
-> Section to do..
+> An awesome project.

@@ -20,6 +20,13 @@ class UserItemsController extends Controller
 
         // return $user->user_items;
 
+        if ($user == null) {
+            return response()->json(
+                ['status' => -50]
+            );
+        }
+
+
         $worth = 0;
 
         foreach ($user->user_items as $item) {
@@ -27,7 +34,7 @@ class UserItemsController extends Controller
         }
 
 
-        return response()->json(["DATA" => $user->user_items->load('item_data')->toArray(), 'value' => $worth], 201);
+        return response()->json(["status" => 1, "DATA" => $user->user_items->load('item_data')->toArray(), 'value' => $worth], 201);
 
         $user_items = $user->user_items;
     }
@@ -91,11 +98,20 @@ class UserItemsController extends Controller
     public function sell(Request $request)
     {
 
+        $user = User::find($request->discord_id);
+
+        // return $user->user_items;
+
+        if ($user == null) {
+            return response()->json(
+                ['status' => -50]
+            );
+        }
         $ammount = $request->ammount;
 
         // return response()->json(["id" => $request->discord_id, 'item' => $request->item_name, 'ammount' => $request->ammount], 201);
 
-        $rarity_array = array('good', 'nice');
+        $rarity_array = array('common', 'uncommon', 'rare', 'epic', 'legendary');
 
         if (in_array($request->item_name, $rarity_array)) {
 
@@ -251,10 +267,16 @@ class UserItemsController extends Controller
     public function give(Request $request)
     {
 
+        $user = User::find($request->discord_id);
+
+        // return $user->user_items;
+
+
+
         $owner = User::find($request->discord_id);
         $target = User::find($request->target_discord_id);
 
-        if ($owner == null || $target == null)   return response()->json(["status" => -1], 201); /// No account
+        if ($owner == null || $target == null)   return response()->json(["status" => -50], 201); /// No account
 
         $item_to_give = User_items::whereHas('item_data', function ($q) use ($request) {
             $q->where('name', '=', $request->item_name);

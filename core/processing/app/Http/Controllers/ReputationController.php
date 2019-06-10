@@ -9,87 +9,20 @@ use \Carbon\Carbon;
 
 class ReputationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Reputation  $reputation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Reputation $reputation)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Reputation  $reputation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Reputation $reputation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Reputation  $reputation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Reputation $reputation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Reputation  $reputation
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Reputation $reputation)
-    {
-        //
-    }
 
 
     public function rep(Request $request)
     {
 
         $user = User::find($request->discord_id);
+        if ($user == null) {
+            return response()->json(
+                ['status' => -50]
+            );
+        }
         $Now = new \DateTime;
         $target = User::find($request->target_discord_id);
 

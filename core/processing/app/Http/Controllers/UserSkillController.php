@@ -16,7 +16,7 @@ class UserSkillController extends Controller
     public function index(Request $request)
     {
         $user = User::find($request->discord_id);
-        if ($user == null) return 'err no such user';
+        if ($user == null)   return response()->json(["status" => -50,], 201);
         $skill = UserSkill::find($request->discord_id);
 
 
@@ -33,7 +33,7 @@ class UserSkillController extends Controller
     public function buy(Request $request)
     {
         $user = User::find($request->discord_id);
-        if ($user == null) return 'err no such user';
+        if ($user == null)   return response()->json(["status" => -50,], 201);
         $skill = UserSkill::find($request->discord_id);
 
         switch ($request->skill_name) {
