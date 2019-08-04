@@ -16,7 +16,7 @@ class CreateMessagesLogsTable extends Migration
         Schema::create('messages_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('discord_id');
-            $table->text('nickname');
+            $table->text('nickname')->nullable();
             $table->bigInteger('guild_id');
             $table->text('guild_name');
             $table->bigInteger('channel_id');
