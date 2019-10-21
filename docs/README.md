@@ -1,3 +1,1 @@
-# Headline
-
-> An awesome project.
+# Docs available here : https://pitchre.github.io/Amaterasu/#/
